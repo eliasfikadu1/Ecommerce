@@ -6,7 +6,7 @@ const cors = require("cors");
 const path = require("path");
 
 const Product = require("./models/Product");
-const Order = require("./models/Order");
+const Order = require("./models/order");
 const User = require("./models/User");
 
 const app = express();
