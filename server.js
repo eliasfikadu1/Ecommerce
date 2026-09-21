@@ -7,7 +7,7 @@ const path = require("path");
 
 const Product = require("./models/Product");
 const Order = require("./models/order");
-const User = require("./models/User");
+const User = require("./models/user");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
