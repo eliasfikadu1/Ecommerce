@@ -43,8 +43,8 @@ function Checkout({ cartItems, setCartItems }) {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/orders",
-        orderData
+        "https://ecommerce-eg1n.onrender.com/api/orders",
+orderData
       );
 
       console.log("Order saved:", response.data);

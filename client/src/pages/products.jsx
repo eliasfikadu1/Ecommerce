@@ -9,7 +9,7 @@ const Products = ({ addToCart }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get("https://ecommerce-eg1n.onrender.com/api/products")
       .then((response) => {
         console.log("API DATA:", response.data);
         setProducts(response.data);
@@ -44,10 +44,8 @@ const Products = ({ addToCart }) => {
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10">
-
       <div className="max-w-7xl mx-auto">
 
-        {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-gray-800">
             Our Products
@@ -58,7 +56,6 @@ const Products = ({ addToCart }) => {
           </p>
         </div>
 
-        {/* Products */}
         {products.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-xl text-gray-500">
@@ -74,9 +71,8 @@ const Products = ({ addToCart }) => {
                 className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300"
               >
 
-                {/* Product Image */}
                 <img
-                  src={`http://localhost:5000/images/${product.image}`}
+                  src={`https://ecommerce-eg1n.onrender.com/images/${product.image}`}
                   alt={product.name}
                   className="w-full h-56 object-cover"
                   onError={(e) => {
@@ -85,7 +81,6 @@ const Products = ({ addToCart }) => {
                   }}
                 />
 
-                {/* Product Info */}
                 <div className="p-5">
 
                   <h2 className="text-2xl font-bold text-gray-800 mb-2">
@@ -100,7 +95,6 @@ const Products = ({ addToCart }) => {
                     {product.price} Birr
                   </p>
 
-                  {/* Buttons */}
                   <div className="flex gap-3">
 
                     <button
