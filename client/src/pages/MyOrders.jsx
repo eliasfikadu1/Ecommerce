@@ -6,9 +6,11 @@ function MyOrders() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const API_URL = "https://ecommerce-eg1n.onrender.com";
+
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/orders")
+      .get(`${API_URL}/api/orders`)
       .then((response) => {
         console.log("ORDERS:", response.data);
         setOrders(response.data);
@@ -84,45 +86,62 @@ function MyOrders() {
                   Products
                 </h3>
 
-                {order.items.map((item) => (
+                {order.items.map((item, itemIndex) => (
                   <div
-                    key={item._id}
-                    className="flex justify-between bg-gray-50 p-3 rounded-lg mb-2"
+                    key={item._id || itemIndex}
+                    className="flex justify-between items-center bg-gray-50 p-3 rounded-lg mb-2"
                   >
-                    <div>
-                      <p className="font-semibold">
-                        {item.name}
-                      </p>
 
-                      <p className="text-gray-500">
-                        Quantity: {item.quantity}
-                      </p>
+                    <div className="flex items-center gap-3">
+
+                      {item.image && (
+                        <img
+                          src={`${API_URL}/images/${item.image}`}
+                          alt={item.name}
+                          className="w-16 h-16 object-cover rounded-lg"
+                        />
+                      )}
+
+                      <div>
+                        <p className="font-semibold">
+                          {item.name}
+                        </p>
+
+                        <p className="text-gray-500">
+                          Quantity: {item.quantity}
+                        </p>
+                      </div>
+
                     </div>
 
                     <p className="font-bold">
-                      {item.price * item.quantity} ETB
+                      {Number(item.price) * item.quantity} ETB
                     </p>
+
                   </div>
                 ))}
 
               </div>
 
               <div className="border-t mt-5 pt-5 text-gray-600">
+
                 <p>
                   <strong>Customer:</strong>{" "}
                   {order.customerName}
                 </p>
 
                 <p>
-                  <strong>Phone:</strong> {order.phone}
+                  <strong>Phone:</strong>{" "}
+                  {order.phone}
                 </p>
 
                 <p>
-                  <strong>Address:</strong> {order.address}
+                  <strong>Address:</strong>{" "}
+                  {order.address}
                 </p>
-              </div>
 
-              <div className="text-right mt-5">
+              </div>
+<div className="text-right mt-5">
                 <span className="text-2xl font-bold">
                   Total: {order.total} ETB
                 </span>
