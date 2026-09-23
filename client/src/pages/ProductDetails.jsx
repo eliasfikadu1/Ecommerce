@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
+const API_URL = "https://ecommerce-eg1n.onrender.com";
+
 function ProductDetails({ addToCart }) {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ function ProductDetails({ addToCart }) {
         console.log("URL ID:", id);
 
         const response = await axios.get(
-          `http://localhost:5000/api/products/${id}`
+          `${API_URL}/api/products/${id}`
         );
 
         console.log("PRODUCT DETAILS:", response.data);
@@ -88,11 +90,14 @@ function ProductDetails({ addToCart }) {
           {/* Product Image */}
           <div className="flex items-center justify-center bg-gray-50 rounded-xl p-6">
             <img
-              src={`http://localhost:5000/images/${product.image}`}
+              src={`${API_URL}/images/${product.image}`}
               alt={product.name}
               className="w-full max-w-md h-96 object-contain rounded-xl"
               onError={(e) => {
-                e.target.style.display = "none";
+                console.error(
+                  "Image failed:",
+                  `${API_URL}/images/${product.image}`
+                );
               }}
             />
           </div>
@@ -138,8 +143,7 @@ function ProductDetails({ addToCart }) {
 
             </div>
           </div>
-
-        </div>
+</div>
       </div>
     </div>
   );
