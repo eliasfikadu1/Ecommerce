@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Login() {
+function Login({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,7 +15,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-       "https://ecommerce-eg1n.onrender.com/api/login",
+        "https://ecommerce-eg1n.onrender.com/api/login",
         {
           email,
           password,
@@ -24,10 +24,14 @@ function Login() {
 
       console.log("Login successful:", response.data);
 
+      // Save user to localStorage
       localStorage.setItem(
         "user",
         JSON.stringify(response.data.user)
       );
+
+      // Update App.jsx immediately
+      setUser(response.data.user);
 
       // Login success → Home
       navigate("/");

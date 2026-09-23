@@ -22,7 +22,13 @@ function App() {
 
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
+
+    try {
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch {
+      localStorage.removeItem("user");
+      return null;
+    }
   });
 
   const addToCart = (product) => {
@@ -89,8 +95,10 @@ function AppContent({
 
   return (
     <div className="min-h-screen bg-gray-50">
+
       {/* Navbar */}
       <nav className="bg-white shadow-md px-6 md:px-12 py-5 flex justify-between items-center">
+
         {/* Logo */}
         <Link
           to="/"
@@ -101,6 +109,7 @@ function AppContent({
 
         {/* Navigation */}
         <div className="flex items-center gap-6">
+
           <Link
             to="/"
             className="text-gray-700 hover:text-blue-600 font-medium"
@@ -132,7 +141,6 @@ function AppContent({
           {/* Logged In User */}
           {user ? (
             <>
-              {/* Profile */}
               <Link
                 to="/profile"
                 className="text-gray-700 hover:text-blue-600 font-medium"
@@ -140,12 +148,10 @@ function AppContent({
                 Profile 👤
               </Link>
 
-              {/* Welcome */}
               <span className="font-semibold text-green-600">
-                Welcome, {user.name} 👋
+                Welcome, {user.name || user.fullname || "User"} 👋
               </span>
 
-              {/* Logout */}
               <button
                 onClick={handleLogout}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-bold"
@@ -161,7 +167,7 @@ function AppContent({
               >
                 Login
               </Link>
-              <Link
+<Link
                 to="/register"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold"
               >
@@ -174,25 +180,21 @@ function AppContent({
 
       {/* Pages */}
       <Routes>
-        {/* Home */}
+
         <Route path="/" element={<Home />} />
 
-        {/* Home old link support */}
         <Route path="/home" element={<Home />} />
 
-        {/* Products */}
         <Route
           path="/products"
           element={<Products addToCart={addToCart} />}
         />
 
-        {/* Product Details */}
         <Route
           path="/products/:id"
           element={<ProductDetails addToCart={addToCart} />}
         />
 
-        {/* Cart */}
         <Route
           path="/cart"
           element={
@@ -203,7 +205,6 @@ function AppContent({
           }
         />
 
-        {/* Checkout */}
         <Route
           path="/checkout"
           element={
@@ -214,25 +215,25 @@ function AppContent({
           }
         />
 
-        {/* My Orders */}
         <Route
           path="/my-orders"
           element={<MyOrders />}
         />
 
-        {/* Register */}
         <Route
           path="/register"
           element={<Register />}
         />
 
-        {/* Login */}
         <Route
           path="/login"
-          element={<Login />}
+          element={
+            <Login
+              setUser={setUser}
+            />
+          }
         />
 
-        {/* Profile */}
         <Route
           path="/profile"
           element={
@@ -242,6 +243,7 @@ function AppContent({
             />
           }
         />
+
       </Routes>
     </div>
   );
