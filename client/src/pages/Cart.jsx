@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+const API_URL = "https://ecommerce-eg1n.onrender.com";
+
 function Cart({ cartItems, setCartItems }) {
   const increaseQuantity = (id) => {
     setCartItems((items) =>
@@ -51,7 +53,7 @@ function Cart({ cartItems, setCartItems }) {
             to="/products"
             className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700"
           >
-            🛍️ Start Shopping
+            🛍 Start Shopping
           </Link>
         </div>
       ) : (
@@ -65,9 +67,15 @@ function Cart({ cartItems, setCartItems }) {
                 className="bg-white p-5 rounded-xl shadow flex flex-col md:flex-row gap-5"
               >
                 <img
-                  src={`http://localhost:5000/images/${item.image}`}
+                  src={`${API_URL}/images/${item.image}`}
                   alt={item.name}
                   className="w-full md:w-40 h-40 object-cover rounded-lg"
+                  onError={(e) => {
+                    console.error(
+                      "Cart image failed:",
+                      `${API_URL}/images/${item.image}`
+                    );
+                  }}
                 />
 
                 <div className="flex-1">
@@ -116,7 +124,7 @@ function Cart({ cartItems, setCartItems }) {
                   <button
                     type="button"
                     onClick={() => removeFromCart(item._id)}
-                    className="mt-4 bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600"
+className="mt-4 bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600"
                   >
                     🗑 Remove
                   </button>
@@ -130,7 +138,8 @@ function Cart({ cartItems, setCartItems }) {
             <h2 className="text-2xl font-bold mb-6">
               Order Summary
             </h2>
-<div className="flex justify-between mb-4">
+
+            <div className="flex justify-between mb-4">
               <span>Products</span>
               <span>{cartItems.length}</span>
             </div>
@@ -153,6 +162,7 @@ function Cart({ cartItems, setCartItems }) {
               💳 Checkout
             </Link>
           </div>
+
         </div>
       )}
     </div>
