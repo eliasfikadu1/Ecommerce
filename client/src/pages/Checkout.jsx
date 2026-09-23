@@ -118,26 +118,29 @@ orderData
                     <div className="flex items-center gap-4">
 
                       {item.image && (
-                        <img
-                          src={`http://localhost:5000/images/${item.image}`}
-                          alt={item.name}
-                          className="w-20 h-20 object-cover rounded-xl bg-gray-100"
-                        />
+                      <img
+  src={`https://ecommerce-eg1n.onrender.com/images/${item.image}`}
+  alt={item.name}
+  className="w-20 h-20 object-cover rounded-xl mr-4"
+/>
+
                       )}
 
                       <div>
-                        <h3 className="font-bold text-gray-800">
-                          {item.name}
-                        </h3>
-<p className="text-sm text-gray-500 mt-1">
-                          Quantity: {item.quantity}
-                        </p>
+    <h3 className="font-bold text-gray-800">
+      {item.name}
+    </h3>
 
-                        <p className="text-sm text-orange-600 font-semibold mt-1">
-                          {Number(item.price)} ETB each
-                        </p>
-                      </div>
-                    </div>
+    <p className="text-sm text-gray-500">
+      Quantity: {item.quantity}
+    </p>
+
+    <p className="text-sm text-orange-600 font-semibold mt-1">
+      {Number(item.price)} ETB each
+    </p>
+  </div>
+
+</div>
 
                     <p className="font-bold text-gray-800 whitespace-nowrap">
                       {Number(item.price) * item.quantity} ETB
