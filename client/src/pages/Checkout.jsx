@@ -31,7 +31,6 @@ function Checkout({ cartItems, setCartItems }) {
       return;
     }
 
-    // Get logged-in user
     const savedUser = localStorage.getItem("user");
 
     if (!savedUser) {
@@ -57,8 +56,7 @@ function Checkout({ cartItems, setCartItems }) {
 
     try {
       const orderData = {
-        userId: userId,
-
+        userId: String(userId),
         customerName: name,
         phone: phone,
         address: address,
@@ -74,14 +72,16 @@ function Checkout({ cartItems, setCartItems }) {
         total: total,
       };
 
-      console.log("Sending order:", orderData);
+      console.log("USER:", user);
+      console.log("USER ID:", userId);
+      console.log("SENDING ORDER:", orderData);
 
       const response = await axios.post(
         `${API_URL}/api/orders`,
         orderData
       );
 
-      console.log("Order saved:", response.data);
+      console.log("ORDER SAVED:", response.data);
 
       setMessage("Order placed successfully! 🎉");
 
@@ -91,7 +91,7 @@ function Checkout({ cartItems, setCartItems }) {
         navigate("/my-orders");
       }, 1500);
     } catch (error) {
-      console.error("Order save error:", error);
+      console.error("ORDER SAVE ERROR:", error);
 
       setMessage(
         error.response?.data?.message ||
@@ -144,15 +144,14 @@ function Checkout({ cartItems, setCartItems }) {
               </div>
             ) : (
               <div className="space-y-4">
-
-                {cartItems.map((item) => (
+{cartItems.map((item) => (
                   <div
                     key={item._id}
                     className="flex items-center justify-between gap-4 border border-gray-100 rounded-2xl p-4 hover:shadow-md transition"
                   >
-
                     <div className="flex items-center gap-4">
-{item.image && (
+
+                      {item.image && (
                         <img
                           src={`${API_URL}/images/${item.image}`}
                           alt={item.name}
@@ -179,7 +178,6 @@ function Checkout({ cartItems, setCartItems }) {
                     <p className="font-bold text-gray-800 whitespace-nowrap">
                       {Number(item.price) * item.quantity} ETB
                     </p>
-
                   </div>
                 ))}
 
@@ -215,7 +213,6 @@ function Checkout({ cartItems, setCartItems }) {
 
             <form onSubmit={handleSubmit}>
 
-              {/* Full Name */}
               <div className="mb-5">
                 <label className="block text-gray-700 font-semibold mb-2">
                   Full Name
@@ -231,7 +228,6 @@ function Checkout({ cartItems, setCartItems }) {
                 />
               </div>
 
-              {/* Phone */}
               <div className="mb-5">
                 <label className="block text-gray-700 font-semibold mb-2">
                   Phone Number
@@ -247,7 +243,6 @@ function Checkout({ cartItems, setCartItems }) {
                 />
               </div>
 
-              {/* Address */}
               <div className="mb-6">
                 <label className="block text-gray-700 font-semibold mb-2">
                   Delivery Address
@@ -257,12 +252,12 @@ function Checkout({ cartItems, setCartItems }) {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Enter your delivery address"
-                  rows="5"
+rows="5"
                   className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition resize-none"
                   required
                 />
               </div>
-{/* Message */}
+
               {message && (
                 <div
                   className={`mb-5 p-4 rounded-xl text-center font-semibold ${
@@ -275,12 +270,11 @@ function Checkout({ cartItems, setCartItems }) {
                 </div>
               )}
 
-              {/* Place Order */}
               <button
                 type="submit"
                 className="w-full bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transition-all"
               >
-                Place Order 
+                Place Order
               </button>
 
               <p className="text-center text-sm text-gray-400 mt-4">
