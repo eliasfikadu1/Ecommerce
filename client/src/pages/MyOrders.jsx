@@ -143,15 +143,14 @@ function MyOrders() {
                         <p className="text-gray-500">
                           Quantity: {item.quantity}
                         </p>
-
-                        <p className="text-orange-600 text-sm font-semibold">
+<p className="text-orange-600 text-sm font-semibold">
                           {Number(item.price)} ETB each
                         </p>
                       </div>
-</div>
+                    </div>
 
                     <p className="font-bold">
-                      {Number(item.price) * item.quantity} ETB
+                      {Number(item.price) * Number(item.quantity)} ETB
                     </p>
 
                   </div>

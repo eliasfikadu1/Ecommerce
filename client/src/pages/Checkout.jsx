@@ -55,31 +55,35 @@ function Checkout({ cartItems, setCartItems }) {
     }
 
     try {
-      const orderData = {
-        userId: String(userId),
-        customerName: name,
-        phone: phone,
-        address: address,
+     const orderData = {
+  userId: String(userId),
+  customerName: name,
+  phone: phone,
+  address: address,
 
-        items: cartItems.map((item) => ({
-          productId: item._id,
-          name: item.name,
-          price: Number(item.price),
-          quantity: item.quantity,
-          image: item.image,
-        })),
+  items: cartItems.map((item) => ({
+    productId: item._id,
+    name: item.name,
+    price: Number(item.price),
+    quantity: item.quantity,
+    image: item.image,
+  })),
 
-        total: total,
-      };
+  total: total,
+};
 
-      console.log("USER:", user);
-      console.log("USER ID:", userId);
-      console.log("SENDING ORDER:", orderData);
+console.log("USER:", user);
+console.log("USER ID:", userId);
+console.log("SENDING ORDER:", orderData);
 
-      const response = await axios.post(
-        `${API_URL}/api/orders`,
-        orderData
-      );
+const API_URL = "https://ecommerce-eg1n.onrender.com";
+
+const response = await axios.post(
+  `${API_URL}/api/orders`,
+  orderData
+);
+
+console.log("ORDER SAVED:", response.data);
 
       console.log("ORDER SAVED:", response.data);
 
