@@ -44,10 +44,12 @@ function MyOrders() {
       })
       .catch((error) => {
         console.error("ORDERS ERROR:", error);
+
         setError(
           error.response?.data?.message ||
             "Orders ማምጣት አልተቻለም"
         );
+
         setLoading(false);
       });
   }, []);
@@ -89,7 +91,7 @@ function MyOrders() {
         ) : (
           orders.map((order, index) => (
             <div
-              key={order._id}
+              key={order._id || index}
               className="bg-white rounded-xl shadow-md p-6 mb-6"
             >
 
@@ -161,7 +163,7 @@ function MyOrders() {
 
                 <p>
                   <strong>Customer:</strong>{" "}
-                  {order.customerName}
+                  {order.customerName || order.name}
                 </p>
 
                 <p>
