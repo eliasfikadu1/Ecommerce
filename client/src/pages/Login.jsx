@@ -26,8 +26,8 @@ function Login({ setUser }) {
 
       localStorage.setItem(
         "user",
-        JSON.stringify(response.data.user)
-      );
+        JSON.stringify(response.data.user
+      ));
 
       setUser(response.data.user);
 
