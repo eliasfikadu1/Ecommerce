@@ -24,16 +24,13 @@ function Login({ setUser }) {
 
       console.log("Login successful:", response.data);
 
-      // Save user to localStorage
       localStorage.setItem(
         "user",
         JSON.stringify(response.data.user)
       );
 
-      // Update App.jsx immediately
       setUser(response.data.user);
 
-      // Login success → Home
       navigate("/");
     } catch (err) {
       console.error("Login error:", err);
@@ -46,23 +43,39 @@ function Login({ setUser }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg">
+    <div className="min-h-screen bg-orange-50 flex items-center justify-center px-4 py-12">
 
-        <h1 className="text-3xl font-bold text-center mb-6">
-          Login
+      <div className="bg-white w-full max-w-md p-8 md:p-10 rounded-3xl shadow-xl border border-orange-100">
+
+        {/* ICON */}
+        <div className="flex justify-center mb-5">
+          <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-3xl shadow-md">
+            🍴
+          </div>
+        </div>
+
+        {/* TITLE */}
+        <h1 className="text-3xl font-extrabold text-center text-gray-800">
+          Welcome Back!
         </h1>
 
+        <p className="text-center text-gray-500 mt-2 mb-7">
+          Login to your FoodExpress account
+        </p>
+
+        {/* ERROR */}
         {error && (
-          <div className="bg-red-100 text-red-600 p-3 rounded-lg mb-4">
+          <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-xl mb-5 text-sm font-medium">
             {error}
           </div>
         )}
 
+        {/* FORM */}
         <form onSubmit={handleLogin} className="space-y-5">
 
+          {/* EMAIL */}
           <div>
-            <label className="block font-medium mb-2">
+            <label className="block font-semibold text-gray-700 mb-2">
               Email
             </label>
 
@@ -71,13 +84,14 @@ function Login({ setUser }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition"
               required
             />
           </div>
 
+          {/* PASSWORD */}
           <div>
-            <label className="block font-medium mb-2">
+            <label className="block font-semibold text-gray-700 mb-2">
               Password
             </label>
 
@@ -86,25 +100,27 @@ function Login({ setUser }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition"
               required
             />
           </div>
 
+          {/* LOGIN BUTTON */}
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold"
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3.5 rounded-xl font-bold text-lg transition shadow-md"
           >
-            Login
+            Login 🔐
           </button>
 
         </form>
 
-        <p className="text-center mt-6">
+        {/* REGISTER */}
+        <p className="text-center mt-7 text-gray-600">
           Don't have an account?{" "}
           <Link
             to="/register"
-            className="text-blue-600 font-bold hover:underline"
+            className="text-orange-500 font-bold hover:text-orange-600 hover:underline"
           >
             Register
           </Link>

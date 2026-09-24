@@ -10,6 +10,8 @@ function Checkout({ cartItems, setCartItems }) {
 
   const navigate = useNavigate();
 
+  const API_URL = "https://ecommerce-eg1n.onrender.com";
+
   const total = cartItems.reduce(
     (sum, item) => sum + Number(item.price) * item.quantity,
     0
@@ -17,6 +19,7 @@ function Checkout({ cartItems, setCartItems }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
 
     if (!name || !phone || !address) {
       setMessage("Please fill in all fields.");
@@ -28,23 +31,54 @@ function Checkout({ cartItems, setCartItems }) {
       return;
     }
 
+    // Get logged-in user
+    const savedUser = localStorage.getItem("user");
+
+    if (!savedUser) {
+      setMessage("Please login before placing an order.");
+      return;
+    }
+
+    let user;
+
+    try {
+      user = JSON.parse(savedUser);
+    } catch (error) {
+      setMessage("Please login again.");
+      return;
+    }
+
+    const userId = user?._id || user?.id;
+
+    if (!userId) {
+      setMessage("Please login again before placing an order.");
+      return;
+    }
+
     try {
       const orderData = {
+        userId: userId,
+
         customerName: name,
         phone: phone,
         address: address,
+
         items: cartItems.map((item) => ({
           productId: item._id,
           name: item.name,
           price: Number(item.price),
           quantity: item.quantity,
+          image: item.image,
         })),
+
         total: total,
       };
 
+      console.log("Sending order:", orderData);
+
       const response = await axios.post(
-        "https://ecommerce-eg1n.onrender.com/api/orders",
-orderData
+        `${API_URL}/api/orders`,
+        orderData
       );
 
       console.log("Order saved:", response.data);
@@ -70,7 +104,6 @@ orderData
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100 py-12 px-4">
       <div className="max-w-6xl mx-auto">
 
-        {/* Page Title */}
         <div className="text-center mb-10">
           <p className="text-orange-500 font-semibold tracking-wide uppercase">
             Complete Your Purchase
@@ -89,6 +122,7 @@ orderData
 
           {/* Order Summary */}
           <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8 h-fit">
+
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-800">
                 Order Summary
@@ -110,49 +144,51 @@ orderData
               </div>
             ) : (
               <div className="space-y-4">
+
                 {cartItems.map((item) => (
                   <div
                     key={item._id}
                     className="flex items-center justify-between gap-4 border border-gray-100 rounded-2xl p-4 hover:shadow-md transition"
                   >
+
                     <div className="flex items-center gap-4">
-
-                      {item.image && (
-                      <img
-  src={`https://ecommerce-eg1n.onrender.com/images/${item.image}`}
-  alt={item.name}
-  className="w-20 h-20 object-cover rounded-xl mr-4"
-/>
-
+{item.image && (
+                        <img
+                          src={`${API_URL}/images/${item.image}`}
+                          alt={item.name}
+                          className="w-20 h-20 object-cover rounded-xl"
+                        />
                       )}
 
                       <div>
-    <h3 className="font-bold text-gray-800">
-      {item.name}
-    </h3>
+                        <h3 className="font-bold text-gray-800">
+                          {item.name}
+                        </h3>
 
-    <p className="text-sm text-gray-500">
-      Quantity: {item.quantity}
-    </p>
+                        <p className="text-sm text-gray-500">
+                          Quantity: {item.quantity}
+                        </p>
 
-    <p className="text-sm text-orange-600 font-semibold mt-1">
-      {Number(item.price)} ETB each
-    </p>
-  </div>
+                        <p className="text-sm text-orange-600 font-semibold mt-1">
+                          {Number(item.price)} ETB each
+                        </p>
+                      </div>
 
-</div>
+                    </div>
 
                     <p className="font-bold text-gray-800 whitespace-nowrap">
                       {Number(item.price) * item.quantity} ETB
                     </p>
+
                   </div>
                 ))}
+
               </div>
             )}
 
-            {/* Total */}
             <div className="border-t border-gray-200 mt-6 pt-6">
               <div className="flex justify-between items-center">
+
                 <span className="text-xl font-semibold text-gray-700">
                   Total
                 </span>
@@ -160,12 +196,15 @@ orderData
                 <span className="text-3xl font-extrabold text-orange-600">
                   {total} ETB
                 </span>
+
               </div>
             </div>
+
           </div>
 
           {/* Checkout Form */}
           <div className="bg-white rounded-3xl shadow-xl p-6 md:p-8">
+
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
               Delivery Information
             </h2>
@@ -188,6 +227,7 @@ orderData
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Enter your full name"
                   className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
+                  required
                 />
               </div>
 
@@ -203,6 +243,7 @@ orderData
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Enter your phone number"
                   className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
+                  required
                 />
               </div>
 
@@ -218,10 +259,10 @@ orderData
                   placeholder="Enter your delivery address"
                   rows="5"
                   className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition resize-none"
+                  required
                 />
               </div>
-
-              {/* Message */}
+{/* Message */}
               {message && (
                 <div
                   className={`mb-5 p-4 rounded-xl text-center font-semibold ${
@@ -235,11 +276,11 @@ orderData
               )}
 
               {/* Place Order */}
-<button
+              <button
                 type="submit"
                 className="w-full bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transition-all"
               >
-                Place Order 🛍️
+                Place Order 
               </button>
 
               <p className="text-center text-sm text-gray-400 mt-4">
@@ -248,6 +289,7 @@ orderData
 
             </form>
           </div>
+
         </div>
       </div>
     </div>

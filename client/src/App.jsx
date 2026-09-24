@@ -97,86 +97,87 @@ function AppContent({
     <div className="min-h-screen bg-gray-50">
 
       {/* Navbar */}
-      <nav className="bg-white shadow-md px-6 md:px-12 py-5 flex justify-between items-center">
+     <nav className="bg-white shadow-md border-b border-orange-100 px-6 md:px-12 py-5 flex justify-between items-center">
 
-        {/* Logo */}
+  {/* Logo */}
+  <Link
+    to="/"
+    className="text-3xl font-bold text-orange-500"
+  >
+    FoodExpress
+  </Link>
+
+  {/* Navigation */}
+  <div className="flex items-center gap-6">
+
+    <Link
+      to="/"
+      className="text-gray-700 hover:text-orange-500 font-medium transition"
+    >
+      Home
+    </Link>
+
+    <Link
+      to="/products"
+      className="text-gray-700 hover:text-orange-500 font-medium transition"
+    >
+      Products
+    </Link>
+
+    <Link
+      to="/cart"
+      className="text-gray-700 hover:text-orange-500 font-medium transition"
+    >
+      Cart 🛒 ({totalCartItems})
+    </Link>
+
+    <Link
+      to="/my-orders"
+      className="text-gray-700 hover:text-orange-500 font-medium transition"
+    >
+      My Orders 📦
+    </Link>
+
+    {/* Logged In User */}
+    {user ? (
+      <>
         <Link
-          to="/"
-          className="text-3xl font-bold text-blue-600"
+          to="/profile"
+          className="text-gray-700 hover:text-orange-500 font-medium transition"
         >
-          My Ecommerce
+          Profile 👤
         </Link>
 
-        {/* Navigation */}
-        <div className="flex items-center gap-6">
+        <span className="font-semibold text-orange-500">
+        </span>
 
-          <Link
-            to="/"
-            className="text-gray-700 hover:text-blue-600 font-medium"
-          >
-            Home
-          </Link>
+        <button
+          onClick={handleLogout}
+          className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold transition"
+        >
+          Logout
+        </button>
+      </>
+    ) : (
+      <>
+        <Link
+          to="/login"
+          className="text-orange-500 hover:text-orange-600 font-bold transition"
+        >
+          Login
+        </Link>
 
-          <Link
-            to="/products"
-            className="text-gray-700 hover:text-blue-600 font-medium"
-          >
-            Products
-          </Link>
+        <Link
+          to="/register"
+          className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold transition shadow-sm"
+        >
+          Register
+        </Link>
+      </>
+    )}
 
-          <Link
-            to="/cart"
-            className="text-gray-700 hover:text-blue-600 font-medium"
-          >
-            Cart 🛒 ({totalCartItems})
-          </Link>
-
-          <Link
-            to="/my-orders"
-            className="text-gray-700 hover:text-blue-600 font-medium"
-          >
-            My Orders 📦
-          </Link>
-
-          {/* Logged In User */}
-          {user ? (
-            <>
-              <Link
-                to="/profile"
-                className="text-gray-700 hover:text-blue-600 font-medium"
-              >
-                Profile 👤
-              </Link>
-
-              <span className="font-semibold text-green-600">
-                Welcome, {user.name || user.fullname || "User"} 👋
-              </span>
-
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-bold"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="text-blue-600 font-bold"
-              >
-                Login
-              </Link>
-<Link
-                to="/register"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold"
-              >
-                Register
-              </Link>
-            </>
-          )}
-        </div>
-      </nav>
+  </div>
+</nav>
 
       {/* Pages */}
       <Routes>
