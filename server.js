@@ -159,13 +159,30 @@ app.get("/api/orders/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
+    console.log("================================");
     console.log("GET ORDERS USER ID:", userId);
 
-    const orders = await Order.find({ userId }).sort({
+    const allOrders = await Order.find({});
+
+    console.log("TOTAL ORDERS IN DB:", allOrders.length);
+
+    allOrders.forEach((order) => {
+      console.log(
+        "DB ORDER USER ID:",
+        order.userId,
+        "| MATCH:",
+        order.userId === userId
+      );
+    });
+
+    const orders = await Order.find({
+      userId: userId,
+    }).sort({
       createdAt: -1,
     });
 
     console.log("ORDERS FOUND:", orders.length);
+    console.log("================================");
 
     res.status(200).json(orders);
   } catch (error) {
