@@ -55,7 +55,8 @@ function Checkout({ cartItems, setCartItems }) {
     }
 
     try {
-     const orderData = {
+
+  const orderData = {
   userId: String(userId),
   customerName: name,
   phone: phone,

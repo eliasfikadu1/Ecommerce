@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
-
 const orderSchema = new mongoose.Schema(
   {
+    userId: {
+      type: String,
+      required: true,
+    },
+
     customerName: {
       type: String,
     },
@@ -41,6 +45,10 @@ const orderSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
+
+        image: {
+          type: String,
+        },
       },
     ],
 
@@ -58,6 +66,7 @@ orderSchema.pre("save", function () {
   if (!this.customerName && this.name) {
     this.customerName = this.name;
   }
+
   if (!this.name && this.customerName) {
     this.name = this.customerName;
   }

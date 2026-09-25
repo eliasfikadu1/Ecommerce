@@ -157,23 +157,10 @@ app.delete("/api/products/:id", async (req, res) => {
 
 app.get("/api/orders/:userId", async (req, res) => {
   try {
-    const { userId } = req.params;
+    const userId = String(req.params.userId).trim();
 
     console.log("================================");
     console.log("GET ORDERS USER ID:", userId);
-
-    const allOrders = await Order.find({});
-
-    console.log("TOTAL ORDERS IN DB:", allOrders.length);
-
-    allOrders.forEach((order) => {
-      console.log(
-        "DB ORDER USER ID:",
-        order.userId,
-        "| MATCH:",
-        order.userId === userId
-      );
-    });
 
     const orders = await Order.find({
       userId: userId,
@@ -182,6 +169,11 @@ app.get("/api/orders/:userId", async (req, res) => {
     });
 
     console.log("ORDERS FOUND:", orders.length);
+
+    if (orders.length > 0) {
+      console.log("FIRST ORDER USER ID:", orders[0].userId);
+    }
+
     console.log("================================");
 
     res.status(200).json(orders);
@@ -194,6 +186,7 @@ app.get("/api/orders/:userId", async (req, res) => {
     });
   }
 });
+
 
 // ===============================
 // CREATE ORDER

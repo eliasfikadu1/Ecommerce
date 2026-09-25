@@ -9,13 +9,12 @@ function MyOrders() {
   const API_URL = "https://ecommerce-eg1n.onrender.com";
 
   useEffect(() => {
+    console.log("MY ORDERS PAGE LOADED");
 
-  console.log("MY ORDERS PAGE LOADED");
-  
     const savedUser = localStorage.getItem("user");
 
     console.log("SAVED USER:", savedUser);
-    
+
     if (!savedUser) {
       setError("Please login to see your orders.");
       setLoading(false);
@@ -34,6 +33,8 @@ function MyOrders() {
 
     const userId = user?._id || user?.id;
 
+    console.log("USER ID:", userId);
+
     if (!userId) {
       setError("Please login again to see your orders.");
       setLoading(false);
@@ -44,6 +45,7 @@ function MyOrders() {
       .get(`${API_URL}/api/orders/${userId}`)
       .then((response) => {
         console.log("MY ORDERS:", response.data);
+
         setOrders(response.data);
         setLoading(false);
       })
@@ -152,6 +154,7 @@ function MyOrders() {
                           {Number(item.price)} ETB each
                         </p>
                       </div>
+
                     </div>
 
                     <p className="font-bold">
