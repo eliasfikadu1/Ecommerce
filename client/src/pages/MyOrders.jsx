@@ -9,8 +9,13 @@ function MyOrders() {
   const API_URL = "https://ecommerce-eg1n.onrender.com";
 
   useEffect(() => {
+
+  console.log("MY ORDERS PAGE LOADED");
+  
     const savedUser = localStorage.getItem("user");
 
+    console.log("SAVED USER:", savedUser);
+    
     if (!savedUser) {
       setError("Please login to see your orders.");
       setLoading(false);
