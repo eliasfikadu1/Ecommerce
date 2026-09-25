@@ -203,11 +203,38 @@ app.post("/api/orders", async (req, res) => {
   try {
     console.log("ORDER DATA:", req.body);
 
-    const order = new Order(req.body);
+    const {
+      userId,
+      customerName,
+      name,
+      phone,
+      address,
+      items,
+      total,
+    } = req.body;
+
+    console.log("RECEIVED USER ID:", userId);
+
+    if (!userId) {
+      return res.status(400).json({
+        message: "User ID is required",
+      });
+    }
+
+    const order = new Order({
+      userId: String(userId),
+      customerName,
+      name,
+      phone,
+      address,
+      items,
+      total: Number(total),
+    });
 
     const savedOrder = await order.save();
 
     console.log("ORDER SAVED:", savedOrder);
+    console.log("SAVED USER ID:", savedOrder.userId);
 
     res.status(201).json({
       message: "Order placed successfully",
