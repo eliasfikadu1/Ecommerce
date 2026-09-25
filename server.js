@@ -220,6 +220,8 @@ app.post("/api/orders", async (req, res) => {
         message: "User ID is required",
       });
     }
+    console.log("ORDER MODEL PATH:", require.resolve("./models/order"));
+console.log("ORDER SCHEMA PATHS:", Object.keys(Order.schema.paths));
 
     const order = new Order({
       userId: String(userId),
