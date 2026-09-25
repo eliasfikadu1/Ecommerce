@@ -151,14 +151,21 @@ app.delete("/api/products/:id", async (req, res) => {
     });
   }
 });
-
 // ===============================
-// GET ALL ORDERS
+// GET USER ORDERS
 // ===============================
 
-app.get("/api/orders", async (req, res) => {
+app.get("/api/orders/:userId", async (req, res) => {
   try {
-    const orders = await Order.find().sort({ createdAt: -1 });
+    const { userId } = req.params;
+
+    console.log("GET ORDERS USER ID:", userId);
+
+    const orders = await Order.find({ userId }).sort({
+      createdAt: -1,
+    });
+
+    console.log("ORDERS FOUND:", orders.length);
 
     res.status(200).json(orders);
   } catch (error) {
@@ -183,7 +190,8 @@ app.post("/api/orders", async (req, res) => {
 
     const savedOrder = await order.save();
 
-    console.log("ORDER SAVED:", savedOrder._id);
+    console.log("ORDER SAVED:", savedOrder);
+
     res.status(201).json({
       message: "Order placed successfully",
       order: savedOrder,
@@ -276,11 +284,11 @@ app.post("/api/login", async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
+     user: {
+  _id: user._id,
+  name: user.name,
+  email: user.email,
+},
     });
   } catch (error) {
     console.error("LOGIN ERROR:", error);
