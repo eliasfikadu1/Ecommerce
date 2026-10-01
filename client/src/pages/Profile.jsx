@@ -11,7 +11,7 @@ function Profile({ user }) {
 
         {user ? (
           <div className="space-y-5">
-            
+          
             <div>
               <p className="text-gray-500 text-sm">Name</p>
               <p className="text-lg font-semibold">

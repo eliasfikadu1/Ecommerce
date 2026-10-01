@@ -62,11 +62,11 @@ const Products = ({ addToCart }) => {
             FoodExpress Menu
           </p>
 
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-black-800">
             Our Delicious Products 🍴
           </h1>
 
-          <p className="text-gray-500 mt-3 text-lg">
+          <p className="text-black-500 mt-3 text-lg">
             Choose your favorite food and order now.
           </p>
 

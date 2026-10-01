@@ -244,6 +244,11 @@ function AppContent({
             />
           }
         />
+        <Navbar
+  cartItems={cartItems}
+  user={user}
+  setUser={setUser}
+/>
 
       </Routes>
     </div>
