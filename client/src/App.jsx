@@ -16,6 +16,7 @@ import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import ProductDetails from "./pages/ProductDetails.jsx";
 import Profile from "./pages/Profile.jsx";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -96,90 +97,12 @@ function AppContent({
   return (
     <div className="min-h-screen bg-gray-50">
 
-      {/* Navbar */}
-     <nav className="bg-white shadow-md border-b border-orange-100 px-6 md:px-12 py-5 flex justify-between items-center">
-
-  {/* Logo */}
-  <Link
-    to="/"
-    className="text-3xl font-bold text-orange-500"
-  >
-    FoodExpress
-  </Link>
-
-  {/* Navigation */}
-  <div className="flex items-center gap-6">
-
-    <Link
-      to="/"
-      className="text-gray-700 hover:text-orange-500 font-medium transition"
-    >
-      Home
-    </Link>
-
-    <Link
-      to="/products"
-      className="text-gray-700 hover:text-orange-500 font-medium transition"
-    >
-      Products
-    </Link>
-
-    <Link
-      to="/cart"
-      className="text-gray-700 hover:text-orange-500 font-medium transition"
-    >
-      Cart 🛒 ({totalCartItems})
-    </Link>
-
-    <Link
-      to="/my-orders"
-      className="text-gray-700 hover:text-orange-500 font-medium transition"
-    >
-      My Orders 📦
-    </Link>
-
-    {/* Logged In User */}
-    {user ? (
-      <>
-        <Link
-          to="/profile"
-          className="text-gray-700 hover:text-orange-500 font-medium transition"
-        >
-          Profile 👤
-        </Link>
-
-        <span className="font-semibold text-orange-500">
-        </span>
-
-        <button
-          onClick={handleLogout}
-          className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold transition"
-        >
-          Logout
-        </button>
-      </>
-    ) : (
-      <>
-        <Link
-          to="/login"
-          className="text-orange-500 hover:text-orange-600 font-bold transition"
-        >
-          Login
-        </Link>
-
-        <Link
-          to="/register"
-          className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold transition shadow-sm"
-        >
-          Register
-        </Link>
-      </>
-    )}
-
-  </div>
-</nav>
-
-      {/* Pages */}
+      {BrowserRouter}
+      <Navbar
+    cartItems={cartItems}
+    user={user}
+    setUser={setUser}
+  />
       <Routes>
 
         <Route path="/" element={<Home />} />
@@ -244,12 +167,6 @@ function AppContent({
             />
           }
         />
-        <Navbar
-  cartItems={cartItems}
-  user={user}
-  setUser={setUser}
-/>
-
       </Routes>
     </div>
   );
